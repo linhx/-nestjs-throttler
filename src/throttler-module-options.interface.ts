@@ -1,4 +1,7 @@
+import { ExecutionContext } from '@nestjs/common';
 import { ModuleMetadata, Type } from '@nestjs/common/interfaces';
+
+export type SkipMethod = (context: ExecutionContext, ...param: any) => boolean | Promise<boolean>;
 
 export interface ThrottlerModuleOptions {
   /**
@@ -15,6 +18,11 @@ export interface ThrottlerModuleOptions {
    * The user agents that should be ignored (checked against the User-Agent header).
    */
   ignoreUserAgents?: RegExp[];
+
+  /**
+   * if return true then the request should be ignored
+   */
+  skip?: SkipMethod;
 
   /**
    * The storage class to use where all the record will be stored in.
